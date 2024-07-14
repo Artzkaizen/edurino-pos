@@ -3,31 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	color: rgb(var(--foreground-rgb));
+	height: 100vh;
+	box-sizing: border-box;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
+	.button {
+		@apply text-white no-underline relative top-[100px] p-4 rounded-lg transition-all duration-200 ease-in-out;
+		box-shadow: 0px 15px 0px 0px rgb(238, 137, 2), 0px 0px 20px 0px #bbb;
+	}
+	.button:active {
+		@apply top-[7rem];
+		box-shadow: 0px 7px 0px 0px rgb(238, 137, 2);
+	}
 }
