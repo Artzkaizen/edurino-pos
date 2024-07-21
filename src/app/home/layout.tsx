@@ -10,7 +10,7 @@ const DashboardLayout = ({
 		<section>
 			<header className="relative">
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img src="./assets/header.svg" alt="svg" />
+				<img src="/assets/header.svg" alt="svg" />
 			</header>
 			{children}
 		</section>

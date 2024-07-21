@@ -76,12 +76,9 @@ const Page = () => {
 						))}
 					</div>
 					<span
-						className={cn(
-							"opacity-0 transition-all duration-2000 cursor-pointer",
-							{
-								"opacity-100": activeCharacter,
-							}
-						)}
+						className={cn("hidden cursor-pointer", {
+							block: activeCharacter,
+						})}
 					>
 						<Custom3DButton
 							action={`home/play/${activeCharacter?.toLocaleLowerCase()}`}

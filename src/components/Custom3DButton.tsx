@@ -1,7 +1,7 @@
 "use client";
 import "react-awesome-button/dist/styles.css";
 import { useRouter } from "next/navigation";
-import { AwesomeButtonProgress } from "react-awesome-button";
+import { AwesomeButtonProgress, AwesomeButton } from "react-awesome-button";
 
 const Custom3DButton = ({
 	play,
@@ -28,6 +28,7 @@ const Custom3DButton = ({
 			onPress={handlePress}
 		>
 			<div className="flex items-center justify-center">
+				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img className="w-48 h-44" src="/assets/images/cloud-play.png" alt="" />
 				{children}
 			</div>
