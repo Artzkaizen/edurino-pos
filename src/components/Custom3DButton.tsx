@@ -1,7 +1,7 @@
 "use client";
-import "react-awesome-button/dist/styles.css";
+import "./button.css";
 import { useRouter } from "next/navigation";
-import { AwesomeButtonProgress, AwesomeButton } from "react-awesome-button";
+import { AwesomeButtonProgress } from "react-awesome-button";
 
 const Custom3DButton = ({
 	play,
