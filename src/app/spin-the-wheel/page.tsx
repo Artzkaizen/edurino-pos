@@ -15,7 +15,7 @@ const segmentLabels = [
 	"Bestseller Bundle",
 	"5% Rabatt",
 ];
-export const AllCharacters = [
+const AllCharacters = [
 	{ name: "Alex", image: "/assets/images/alex-scroll.png" },
 	{ name: "Asa", image: "/assets/images/asa-scroll.png" },
 	{ name: "Juki", image: "/assets/images/juki-scroll.png" },

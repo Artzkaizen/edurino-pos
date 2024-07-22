@@ -1,6 +1,4 @@
-import Image from "next/image";
-import Characters from "@/components/Character";
-
+/* eslint-disable @next/next/no-img-element */
 const DashboardLayout = ({
 	children,
 }: Readonly<{
@@ -9,7 +7,6 @@ const DashboardLayout = ({
 	return (
 		<section>
 			<header className="relative">
-				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img src="/assets/header.svg" alt="svg" />
 			</header>
 			{children}

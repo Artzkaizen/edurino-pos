@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useWindowDimensions } from "@/hooks";
 import Custom3DButton from "@/components/Custom3DButton";
 
-export const characters = [
+const characters = [
 	{ name: "Alex", image: "/assets/images/alex.png" },
 	{ name: "Robin", image: "/assets/images/robin.png" },
 	{ name: "Ari", image: "/assets/images/ari.png" },
