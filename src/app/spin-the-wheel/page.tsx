@@ -188,10 +188,10 @@ const Certificate = ({ prize }: { prize: string }) => {
 				<div className="flex ">
 					<img className="w-48" src="/assets/images/trophy.svg" alt="trophy" />
 					<div className="flex flex-col justify-start mx-auto items-center">
-						<h2 className="mx-auto text-5xl font-semibold text-center text-black">
+						<h2 className="mx-auto text-6xl font-semibold text-center text-black">
 							Glückwunsch
 						</h2>
-						<p className="text-3xl text-[#EA7438]">{prize}</p>
+						<p className="text-5xl mt-4 text-[#EA7438]">{prize}</p>
 					</div>
 				</div>
 				<img
@@ -209,7 +209,7 @@ const Certificate = ({ prize }: { prize: string }) => {
 			<div className="w-full flex justify-center items-center">
 				<button
 					onClick={() => {
-						router.push("/");
+						router.push("/redeem-prize");
 					}}
 					className={`relative w-[90vw] h-[200px] bg-[#FE9100] text-6xl font-medium text-white cursor-pointer rounded-[3vw] transition-transform duration-100 ease-out active:translate-y-2`}
 				>
