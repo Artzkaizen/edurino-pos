@@ -1,9 +1,20 @@
 "use client";
-import Custom3DButton from "@/components/Custom3DButton";
 import useSound from "use-sound";
+import Custom3DButton from "@/components/Custom3DButton";
+import { useWindowDimensions } from "@/hooks";
 
 export default function Home() {
-	const [playWelcome] = useSound("/assets/audios/welcome-audio.mp3");
+	const [playWelcome, { stop }] = useSound(
+		"/assets/audios/welcome-audio-mix.mp3"
+	);
+	const { width, height } = useWindowDimensions();
+	if (width !== 1080 && height !== 1920) {
+		return (
+			<div className="flex justify-center items-center text-2xl w-full h-screen">
+				<h1>Set your device dimensions to 1080 x 1920 to view app</h1>
+			</div>
+		);
+	}
 	return (
 		<main className="relative grid place-content-center h-screen w-screen">
 			<video
@@ -14,9 +25,7 @@ export default function Home() {
 				loop
 			></video>
 			<div className="absolute bottom-24 left-1/2 transform -translate-x-1/2">
-				<Custom3DButton play={playWelcome} action="home">
-					Jetzt entdecken
-				</Custom3DButton>
+				<Custom3DButton action="home">JETZT ENTDECKEN</Custom3DButton>
 			</div>
 		</main>
 	);

@@ -1,7 +1,9 @@
 "use client";
 import Image from "next/image";
 import { cn } from "@/lib/utlis";
+import useSound from "use-sound";
 import { useState } from "react";
+import { useWindowDimensions } from "@/hooks";
 import Custom3DButton from "@/components/Custom3DButton";
 
 export const characters = [
@@ -14,11 +16,19 @@ export const characters = [
 const Page = () => {
 	const [activeCharacter, setActiveCharacter] = useState<string | null>(null);
 
+	const [playCharacterSound] = useSound("/assets/audios/robin-count-audio.mp3");
 	const handleCharacterClick = (name: string) => {
 		setActiveCharacter(name);
-		console.log(`Selected ${name}`);
 	};
+	const { width, height } = useWindowDimensions();
 
+	if (width !== 1080 || height !== 1920) {
+		return (
+			<div className="text-4xl w-full h-screen">
+				<h1>Set your device dimensions to 1080 x 1920 to view app</h1>
+			</div>
+		);
+	}
 	return (
 		<div>
 			{!activeCharacter && (
@@ -51,7 +61,17 @@ const Page = () => {
 				</h2>
 				<div className="absolute -top-20 -z-30 w-full h-[1000px]">
 					<Image src="/assets/images/curve.svg" alt="svg" fill sizes="1080px" />
+					{!activeCharacter && (
+						<Image
+							className="absolute bottom-20 "
+							src="/assets/images/grass.svg"
+							alt="svg"
+							fill
+							sizes="1080px"
+						/>
+					)}
 				</div>
+
 				<>
 					<div className="flex justify-center gap-4">
 						{characters.map((char) => (
@@ -82,6 +102,7 @@ const Page = () => {
 					>
 						<Custom3DButton
 							action={`home/play/${activeCharacter?.toLocaleLowerCase()}`}
+							play={playCharacterSound}
 						>
 							Speilen
 						</Custom3DButton>

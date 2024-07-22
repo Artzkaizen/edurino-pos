@@ -39,4 +39,35 @@ body {
 		visibility: visible;
 		transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 	}
+	.scroll-container {
+		width: 100vw;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.scroll-inner {
+		display: flex;
+		flex-wrap: nowrap;
+		animation: slide 35s linear infinite;
+	}
+
+	.character-item {
+		flex: 0 0 auto;
+		width: 20rem;
+		margin-right: 1rem;
+	}
+
+	.character-image {
+		width: 100%;
+		height: auto;
+	}
+
+	@keyframes slide {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
 }

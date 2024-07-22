@@ -1,6 +1,7 @@
 "use client";
-import Image from "next/image";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const fruits = [
 	"lime",
@@ -11,36 +12,55 @@ const fruits = [
 	"orange",
 	"watermelon",
 ];
-const getRandomFruit = (arr: string[]) => {
-	const randomIndex = Math.floor(Math.random() * arr.length);
-	return arr[randomIndex];
-};
+
+const getRandomFruit = (fruits: string[]) =>
+	fruits[Math.floor(Math.random() * fruits.length)];
 
 const generateOptions = (correctAnswer: number) => {
 	const options = new Set<number>();
 	options.add(correctAnswer);
 
 	while (options.size < 4) {
-		const randomOption = Math.floor(Math.random() * 9) + 1;
-		options.add(randomOption);
+		options.add(Math.floor(Math.random() * 9) + 1);
 	}
 
 	return Array.from(options).sort(() => Math.random() - 0.5);
 };
-const Page = ({ params }: { params: { avatar: string } }) => {
-	const [num, setNum] = useState(0);
+
+const getRandomColorClass = () => {
+	const colors = [
+		"text-red-500",
+		"text-green-500",
+		"text-blue-500",
+		"text-yellow-500",
+		"text-purple-500",
+		"text-pink-500",
+		"text-indigo-500",
+		"text-teal-500",
+		"text-orange-500",
+	];
+	return colors[Math.floor(Math.random() * colors.length)];
+};
+
+const Page = () => {
+	const [num, setNum] = useState<number>(0);
 	const [fruit, setFruit] = useState<string>("");
 	const [arr, setArr] = useState<number[]>([]);
 	const [options, setOptions] = useState<number[]>([]);
 	const [pressed, setPressed] = useState<number | null>(null);
 	const [isCorrect, setIsCorrect] = useState<boolean>(false);
+	const [colorClasses, setColorClasses] = useState<string[]>([]);
+	const [correctCount, setCorrectCount] = useState<number>(0);
 
 	useEffect(() => {
-		runGame();
-	}, [isCorrect]); // Run once on mount
+		if (correctCount < 3) {
+			runGame();
+		} else {
+			redirect("/spin-the-wheel");
+		}
+	}, [correctCount]);
 
-	const runGame = async () => {
-		setTimeout(() => {}, 5000);
+	const runGame = () => {
 		const initialNum = Math.floor(Math.random() * 9) + 1;
 		setNum(initialNum);
 		setArr(Array.from({ length: initialNum }, (_, i) => i));
@@ -48,26 +68,31 @@ const Page = ({ params }: { params: { avatar: string } }) => {
 		setOptions(generateOptions(initialNum));
 		setPressed(null);
 		setIsCorrect(false);
+		setColorClasses(Array.from({ length: 4 }, getRandomColorClass));
 	};
 
 	const handleButtonClick = (option: number) => {
-		setIsCorrect(option === num);
+		const correct = option === num;
+		setIsCorrect(correct);
 		setPressed(option);
+		if (correct) {
+			setCorrectCount((prev) => prev + 1);
+		}
 		setTimeout(() => {
 			setPressed(null);
 			setIsCorrect(false);
 		}, 2000);
 	};
+
 	return (
 		<>
 			<div className="m-auto mt-4 h-[820px] w-[820px] border-[45px] border-[#EA7438]">
-				{/* <div>This is the play {params.avatar} page</div> */}
 				<div className="h-full flex flex-wrap gap-2 justify-center items-center">
 					{arr.map((item, index) => (
-						<div key={item + index}>
+						<div key={index}>
 							<Image
 								src={`/assets/images/${fruit}.png`}
-								alt="lime"
+								alt={fruit}
 								width={200}
 								height={200}
 								priority
@@ -82,23 +107,19 @@ const Page = ({ params }: { params: { avatar: string } }) => {
 						<div
 							key={index}
 							onClick={() => handleButtonClick(option)}
-							className={`flex justify-center items-center px-4 py-2 h-60 w-60 bg-blue-500 text-white text-8xl font-medium rounded-2xl transform transition-transform duration-200 ${
-								pressed === option ? "translate-y-2" : ""
+							className={`flex justify-center items-center px-4 py-2 h-60 w-60 bg-white text-8xl font-medium rounded-2xl transform transition-transform duration-200 shadow-lg ${
+								pressed === option
+									? isCorrect
+										? "translate-y-2"
+										: "bg-red-500 text-white"
+									: colorClasses[index]
 							}`}
 						>
 							{option}
 						</div>
 					))}
 				</div>
-				{isCorrect && (
-					<button
-						className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-md text-lg font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
-						onClick={runGame}
-					>
-						Play Again
-					</button>
-				)}
-				<div className="absolute  -z-30 w-full h-[1000px]">
+				<div className="absolute -z-30 w-full h-[1000px]">
 					<Image src="/assets/images/curve.svg" alt="svg" fill sizes="1080px" />
 				</div>
 			</footer>
