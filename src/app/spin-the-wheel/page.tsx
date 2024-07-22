@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useWindowDimensions } from "@/hooks";
 
 const segmentLabels = [
 	"20% Rabatt",
@@ -40,8 +41,6 @@ const Page = () => {
 	const deceleration = useRef(0.1);
 	const maxSpeed = useRef(15);
 
-	const initialOffset = -65.9154;
-
 	useEffect(() => {
 		const segmentAngle = 360 / segmentLabels.length;
 		setWheelSegments(
@@ -52,6 +51,14 @@ const Page = () => {
 		);
 	}, []);
 
+	const { width, height } = useWindowDimensions();
+	if (width !== 1080 && height !== 1920) {
+		return (
+			<div className="flex justify-center items-center text-2xl w-full h-screen">
+				<h1>Set your device dimensions to 1080 x 1920 to view app</h1>
+			</div>
+		);
+	}
 	const spin = () => {
 		setRotation((prevRotation) => prevRotation + spinSpeed.current);
 		requestRef.current = requestAnimationFrame(spin);

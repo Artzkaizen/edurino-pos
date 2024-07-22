@@ -1,8 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import { useWindowDimensions } from "@/hooks";
 import { useRouter } from "next/navigation";
 const Page = () => {
 	const router = useRouter();
+	const { width, height } = useWindowDimensions();
+	if (width !== 1080 && height !== 1920) {
+		return (
+			<div className="flex justify-center items-center text-2xl w-full h-screen">
+				<h1>Set your device dimensions to 1080 x 1920 to view app</h1>
+			</div>
+		);
+	}
 	return (
 		<div className="w-full h-full flex flex-col justify-center items-center gap-20">
 			<h1 className="text-8xl font-semibold">Ihr Gratis Coupon!!!</h1>

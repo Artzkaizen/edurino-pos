@@ -2,6 +2,8 @@
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utlis";
+import useSound from "use-sound";
 
 const fruits = [
 	"lime",
@@ -43,6 +45,8 @@ const getRandomColorClass = () => {
 };
 
 const Page = () => {
+	const [playTryAgain] = useSound("/assets/audios/try-again.mp3");
+	const [playCorrect] = useSound("/assets/audios/correct.mp3");
 	const [num, setNum] = useState<number>(0);
 	const [fruit, setFruit] = useState<string>("");
 	const [arr, setArr] = useState<number[]>([]);
@@ -75,7 +79,9 @@ const Page = () => {
 		const correct = option === num;
 		setIsCorrect(correct);
 		setPressed(option);
+		!correct && playTryAgain();
 		if (correct) {
+			playCorrect();
 			setCorrectCount((prev) => prev + 1);
 		}
 		setTimeout(() => {
@@ -107,13 +113,14 @@ const Page = () => {
 						<div
 							key={index}
 							onClick={() => handleButtonClick(option)}
-							className={`flex justify-center items-center px-4 py-2 h-60 w-60 bg-white text-8xl font-medium rounded-2xl transform transition-transform duration-200 shadow-lg ${
-								pressed === option
-									? isCorrect
-										? "translate-y-2"
-										: "bg-red-500 text-white"
-									: colorClasses[index]
-							}`}
+							className={cn(
+								"flex justify-center items-center px-4 py-2 h-60 w-60 bg-white text-8xl font-medium rounded-2xl transform transition-transform duration-200 shadow-lg",
+								{
+									"translate-y-2 bg-green-500": pressed === option && isCorrect,
+									"bg-red-500": pressed === option && !isCorrect,
+									[colorClasses[index]]: pressed !== option,
+								}
+							)}
 						>
 							{option}
 						</div>
